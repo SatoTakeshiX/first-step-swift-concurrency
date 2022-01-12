@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='raw' buildActiveScheme='true' importAppTypes='true'>
+    <pages>
+        <page name='request-with-closure'/>
+        <page name='request-with-async'/>
+        <page name='parallel-execution'/>
+        <page name='use-async'/>
+        <page name='use-closure'/>
+        <page name='actor'/>
+        <page name='data-invalid'/>
+        <page name='actor-in-await'/>
+        <page name='image-downloader'/>
+    </pages>
+</playground>

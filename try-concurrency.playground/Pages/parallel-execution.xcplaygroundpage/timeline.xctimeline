@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Timeline
+   version = "3.0">
+   <TimelineItems>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/satoutakeshi/local_product/Personal-Factory/techbook12/sample_app/try-concurrency.playground/Pages/parallel-execution.xcplaygroundpage#CharacterRangeLen=0&amp;CharacterRangeLoc=1151&amp;EndingColumnNumber=5&amp;EndingLineNumber=44&amp;StartingColumnNumber=5&amp;StartingLineNumber=44&amp;Timestamp=663695643.440598"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/satoutakeshi/local_product/Personal-Factory/techbook12/sample_app/try-concurrency.playground/Pages/parallel-execution.xcplaygroundpage#CharacterRangeLen=9&amp;CharacterRangeLoc=1695&amp;EndingColumnNumber=18&amp;EndingLineNumber=68&amp;StartingColumnNumber=9&amp;StartingLineNumber=68&amp;Timestamp=663695643.440751"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/satoutakeshi/local_product/Personal-Factory/techbook12/sample_app/try-concurrency.playground/Pages/parallel-execution.xcplaygroundpage#CharacterRangeLen=9&amp;CharacterRangeLoc=1753&amp;EndingColumnNumber=18&amp;EndingLineNumber=69&amp;StartingColumnNumber=9&amp;StartingLineNumber=69&amp;Timestamp=663695643.440829"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/satoutakeshi/local_product/Personal-Factory/techbook12/sample_app/try-concurrency.playground/Pages/parallel-execution.xcplaygroundpage#CharacterRangeLen=10&amp;CharacterRangeLoc=1811&amp;EndingColumnNumber=19&amp;EndingLineNumber=70&amp;StartingColumnNumber=9&amp;StartingLineNumber=70&amp;Timestamp=663695643.4409029"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+   </TimelineItems>
+</Timeline>
