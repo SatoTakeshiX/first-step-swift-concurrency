@@ -6,52 +6,46 @@ import PlaygroundSupport
 
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-class TemperatureLogger {
-    var measurements: [Int]
-    private(set) var max: Int
+class Score {
+    var logs: [Int] = []
+    private(set) var highScore: Int = 0
 
-    init(measurement: Int) {
-        self.measurements = [measurement]
-        self.max = measurement
-    }
-}
-
-extension TemperatureLogger {
-    func update(with measurement: Int) {
-        measurements.append(measurement)
+    func update(with score: Int) {
+        logs.append(score)
         // measurementsが追加されてからmaxが更新されるまでの間に並列で外から読み込まれるとデータ不整合が起こるかもしれない
         // Actorはそのようなデータ不整合を守る
-        if measurement > max {
-            max = measurement
+        if score > highScore {
+            highScore = score
         }
     }
 }
 
-let logger = TemperatureLogger(measurement: 0)
+
+let score = Score()
 
 DispatchQueue.global(qos: .userInitiated).async {
-    logger.update(with: 100)
-    print(logger.max)
+    score.update(with: 100)
+    print(score.highScore)
 }
 
 DispatchQueue.global(qos: .userInitiated).async {
-    logger.update(with: 110)
-    print(logger.max)
+    score.update(with: 110)
+    print(score.highScore)
 }
 
 DispatchQueue.global(qos: .userInitiated).async {
-    logger.update(with: 120)
-    print(logger.max)
+    score.update(with: 120)
+    print(score.highScore)
 }
 
 DispatchQueue.global(qos: .userInitiated).async {
-    logger.update(with: 130)
-    print(logger.max)
+    score.update(with: 130)
+    print(score.highScore)
 }
 
 DispatchQueue.global(qos: .userInitiated).async {
-    logger.update(with: 140)
-    print(logger.max)
+    score.update(with: 140)
+    print(score.highScore)
 }
 
 /*:
@@ -65,5 +59,7 @@ DispatchQueue.global(qos: .userInitiated).async {
  120がなく、130が二回出力されている。
  データ競合が起きている
  */
+
+
 
 //: [Next](@next)

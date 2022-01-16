@@ -6,9 +6,13 @@
         <page name='parallel-execution'/>
         <page name='use-async'/>
         <page name='use-closure'/>
-        <page name='actor'/>
+        <page name='3-3-actor'/>
         <page name='data-invalid'/>
         <page name='actor-in-await'/>
         <page name='image-downloader'/>
+        <page name='3-1-data-race'/>
+        <page name='3-2-serial-dispatch-queue'/>
+        <page name='3-4-actor-syntax'/>
+        <page name='3-5-actor-await'/>
     </pages>
 </playground>

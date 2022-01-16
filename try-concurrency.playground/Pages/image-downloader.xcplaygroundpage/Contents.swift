@@ -3,6 +3,15 @@
 import Foundation
 import _Concurrency
 
+actor A {
+
+}
+
+// // Actor types do not support inheritance
+//actor B: A {
+//
+//}
+
 actor ImageDownloader {
     var cached: [String] = []
     func image(from url: String) async -> String {
@@ -58,5 +67,7 @@ Task.detached {
     await downloader.image(from: "👻")
     print(await downloader.cached)
 }
+
+
 
 //: [Next](@next)
