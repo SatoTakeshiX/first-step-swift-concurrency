@@ -1,13 +1,13 @@
 //: [Previous](@previous)
 
 import Foundation
-//import PlaygroundSupport
+import PlaygroundSupport
 import _Concurrency
-//PlaygroundPage.current.needsIndefiniteExecution = true
+PlaygroundPage.current.needsIndefiniteExecution = true
 
 /*:
 
- # 並列処理をasync/awaitで表現する
+ # 非同期処理をasync/awaitで表現する
 
  URLSessionのdataメソッドでリクエストを行います。
  クロージャー形式のものとは異なり返り値をメソッドに設定できます
@@ -48,15 +48,11 @@ func request(with urlString: String) async throws -> String {
  処理は上から下に通常のコードを同じように流れていきます。
  返り値にStringを取るため、すべてのパスでreturnをするかエラーをthrowするかをしなければコンパイルエラーとなります。completionHandlerのクロージャーを使用していた時とは異なり、すべてのパスで結果を返すかthrowするかはコンパイルがチェックします。
  asyncの関数を呼び出す際はawaitキーワードが必要です。
- awaitキーワードは〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇
- （Swift5.5から登場したキーワードで、（asyncもそうだな..）プログラムが停止状態になる可能性があることをシステムに伝えるものです。
+ awaitキーワードはプログラムが停止状態になる可能性があることをシステムに伝えるものです。
  asyncのメソッドは並列処理のための特別なコンテキストで実行が必要です。
  そのコンテキストを作るためにTask.detachedを使います。
  */
 
-Task.detached {
-
-}
 Task.detached {
     do {
         let urlString = "https://api.github.com/search/repositories?q=swift"

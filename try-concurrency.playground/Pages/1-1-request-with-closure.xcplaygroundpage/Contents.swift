@@ -7,7 +7,7 @@ PlaygroundPage.current.needsIndefiniteExecution = true
 
 /*:
 
- # 並列処理をクロージャーで表現する
+ # 非同期処理をクロージャーで表現する
 
  URLSessionのdataTaskでリクエストを行います。
  次のrequest関数はcompletionHandlerというクロージャーで結果を得られる関数です。
@@ -73,23 +73,20 @@ func request(with urlString: String, completionHandler: @escaping (Result<String
  クロージャーの呼び出しはSwiftコンパイラーはチェックをしないので開発者は注意深くすべてのパスでハンドラーが呼ばれるかどうかをチェックする必要があります。
  */
 
-do {
-    // クロージャーでリクエストを呼ぶ
-    // GitHubのリポジトリ検索API
-    let urlString = "https://api.github.com/search/repositories?q=swift"
-    // Viewにローディング画面を出すためのフラグ
-    var isLoading = true
-    request(with: urlString) { result in
-        // completionHandlerの呼び出しを忘れるとisLoadingがfalseにならず、もしかしてViewのローディングがずっと表示したままになるかもしれない
-        isLoading = false
-        switch result {
-            case .success(let responseString):
-                print(responseString)
-            case .failure(let error):
-                print(error)
-        }
+// クロージャーでリクエストを呼ぶ
+// GitHubのリポジトリ検索API
+let urlString = "https://api.github.com/search/repositories?q=swift"
+// Viewにローディング画面を出すためのフラグ
+var isLoading = true
+request(with: urlString) { result in
+    // completionHandlerの呼び出しを忘れるとisLoadingがfalseにならず、もしかしてViewのローディングがずっと表示したままになるかもしれない
+    isLoading = false
+    switch result {
+        case .success(let responseString):
+            print(responseString)
+        case .failure(let error):
+            print(error)
     }
 }
-
 
 //: [Next](@next)

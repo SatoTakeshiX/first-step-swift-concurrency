@@ -13,7 +13,7 @@ public protocol APIClientable: AnyObject {
     var baseURLString: String { get }
 
 // URLSessionをmockできるようにする
-    func request<Request>(with request: Request, resultHandler: @escaping (Result<Request.Response?, APIClientError>) -> Void) where Request: RequestType
+    func request<Request>(with request: Request, completionHandler: @escaping (Result<Request.Response?, APIClientError>) -> Void) where Request: RequestType
 }
 
 public extension APIClientable {
@@ -37,9 +37,7 @@ public protocol URLSessionable {
 extension URLSession: URLSessionable {}
 
 public final class APIClient: APIClientable {
-
     private let session: URLSessionable
-
     public init(session: URLSessionable) {
         self.session = session
     }
@@ -48,7 +46,6 @@ public final class APIClient: APIClientable {
         guard let urlRequest = request.makeURLRequest(baseURLString: baseURLString) else {
             return .failure(.invalidURL)
         }
-
         do {
             let (data, urlResponse) = try await session.data(for: urlRequest, delegate: nil)
             guard let httpStatus = urlResponse as? HTTPURLResponse else {
@@ -76,45 +73,52 @@ public final class APIClient: APIClientable {
         }
     }
 
-    public func request<Request>(with request: Request, resultHandler: @escaping (Result<Request.Response?, APIClientError>) -> Void) where Request: RequestType {
-
+    public func request<Request>(with request: Request,
+                                 completionHandler: @escaping (Result<Request.Response?, APIClientError>) -> Void) where Request: RequestType {
         guard let urlRequest = request.makeURLRequest(baseURLString: baseURLString) else {
-            resultHandler(.failure(.invalidURL))
+            completionHandler(.failure(.invalidURL))
             return
         }
 
+        requestData(with: urlRequest) { result in
+            do {
+                guard let data = try result.get() else {
+                    completionHandler(.success(nil))
+                    return
+                }
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let responseData = try decoder.decode(Request.Response.self, from: data)
+                completionHandler(.success(responseData))
+            } catch {
+                completionHandler(.failure(error as! APIClientError))
+            }
+        }
+    }
+
+    public func requestData(with urlRequest: URLRequest,
+                            completionHandler: @escaping (Result<Data?, APIClientError>) -> Void) {
+
         let task = session.dataTask(with: urlRequest) { data, response, error in
             if let error = error {
-                resultHandler(.failure(.serverError(error)))
+                completionHandler(.failure(.serverError(error)))
             } else {
                 guard let httpStatus = response as? HTTPURLResponse else {
-                    resultHandler(.failure(.responseError))
+                    completionHandler(.failure(.responseError))
                     return
                 }
 
                 switch httpStatus.statusCode {
                     case 200 ..< 400:
-                        guard let data = data else {
-                            resultHandler(.success(nil))
-                            return
-                        }
-                        do {
-                            let decoder = JSONDecoder()
-                            decoder.keyDecodingStrategy = .convertFromSnakeCase
-                            let responseData = try decoder.decode(Request.Response.self, from: data)
-                            resultHandler(.success(responseData))
-                        } catch {
-                            resultHandler(.failure(.parseError(error)))
-                        }
+                        completionHandler(.success(data))
                     case 400... :
-                        resultHandler(.failure(.badStatus(statusCode: httpStatus.statusCode)))
+                        completionHandler(.failure(.badStatus(statusCode: httpStatus.statusCode)))
                     default:
                         fatalError()
                         break
                 }
             }
         }
-
         task.resume()
     }
 }
