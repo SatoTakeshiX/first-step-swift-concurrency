@@ -3,6 +3,8 @@
     <pages>
         <page name='1-1-request-with-closure'/>
         <page name='1-2-request-with-async'/>
+        <page name='1-3-async-await-syntax'/>
+        <page name='1-4-withCheckedContinuation'/>
         <page name='parallel-execution'/>
         <page name='use-async'/>
         <page name='use-closure'/>

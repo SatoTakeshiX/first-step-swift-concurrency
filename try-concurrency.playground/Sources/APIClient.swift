@@ -9,19 +9,6 @@ public enum APIClientError: Error {
     case noData
 }
 
-public protocol APIClientable: AnyObject {
-    var baseURLString: String { get }
-
-// URLSessionをmockできるようにする
-    func request<Request>(with request: Request, completionHandler: @escaping (Result<Request.Response?, APIClientError>) -> Void) where Request: RequestType
-}
-
-public extension APIClientable {
-    var baseURLString: String {
-        return "https://api.github.com"
-    }
-}
-
 public protocol URLSessionable {
     func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
 
@@ -36,8 +23,11 @@ public protocol URLSessionable {
 
 extension URLSession: URLSessionable {}
 
-public final class APIClient: APIClientable {
+public final class APIClient {
     private let session: URLSessionable
+    private var baseURLString: String {
+        return "https://api.github.com"
+    }
     public init(session: URLSessionable) {
         self.session = session
     }
