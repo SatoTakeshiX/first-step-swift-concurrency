@@ -20,7 +20,8 @@ struct ContentView: View {
                         TaskGroupView()
                     }
                     NavigationLink("async let") {
-
+                        AsyncLetView()
+        
                     }
                 }
 

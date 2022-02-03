@@ -189,8 +189,8 @@ final class TaskGroupViewModel {
 
     func sendLog() async {
         return await withTaskGroup(of: Void.self) { group in
-            group.addTask { [weak self] in
-                await self?.wait(seconds: 1)
+            group.addTask {
+                await Util.wait(seconds: 1)
                 print("finish \(#function)")
             }
         }
@@ -200,7 +200,7 @@ final class TaskGroupViewModel {
 extension TaskGroupViewModel {
 
     private func fetchFriends() async -> [String] {
-        await wait(seconds: 2)
+        await Util.wait(seconds: 2)
         return [
             "Aris",
             "Bob",
@@ -210,7 +210,7 @@ extension TaskGroupViewModel {
     }
 
     private func fetchArticle() async -> [String] {
-        await wait(seconds: 1)
+        await Util.wait(seconds: 1)
         return [
             "猫を飼い始めました",
             "名前はココア",
@@ -219,17 +219,13 @@ extension TaskGroupViewModel {
     }
 
     private func fetchAvatorImage(id: String) async -> UIImage {
-        await wait(seconds: 2)
+        await Util.wait(seconds: 2)
         return UIImage()
     }
 
     private func fetchFriendsFromLocalDB() async throws -> [String] {
-        await wait(seconds: 1)
+        await Util.wait(seconds: 1)
         throw InternalError()
-    }
-
-    private func wait(seconds: UInt64) async {
-        try? await Task.sleep(nanoseconds: seconds * 1_000_000_000)
     }
 }
 
