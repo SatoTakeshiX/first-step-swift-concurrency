@@ -97,7 +97,7 @@ final class AsyncLetViewModel {
     }
 
     func fetchAllFriends() async throws -> [String] {
-        async let friends = fetchFriends() // 2秒かかる
+        async let friends = fetchFriends() // 3秒かかる
         async let localFriends = fetchFriendsFromLocalDB() // 1秒でエラー返す
         return try await localFriends + friends
     }
@@ -106,7 +106,7 @@ final class AsyncLetViewModel {
 
 extension AsyncLetViewModel {
     private func fetchFriends() async -> [String] {
-        await Util.wait(seconds: 2)
+        await Util.wait(seconds: 3)
         return [
             "Aris",
             "Bob",

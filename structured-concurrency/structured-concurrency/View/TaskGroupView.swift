@@ -98,15 +98,15 @@ final class TaskGroupViewModel {
         }
         await withTaskGroup(of: FetchType.self) { group in
 
-            group.addTask {
+            group.addTask { [weak self] in
                 // 友達APIを叩いて名前を取得
-                let friends = await self.fetchFriends()
+                let friends = await self?.fetchFriends() ?? []
                 return FetchType.friends(friends)
             }
 
-            group.addTask {
+            group.addTask { [weak self] in
                 // 投稿記事APIを叩いて記事名を取得
-                let articles = await self.fetchArticle()
+                let articles = await self?.fetchArticle() ?? []
                 return FetchType.articles(articles)
             }
 
