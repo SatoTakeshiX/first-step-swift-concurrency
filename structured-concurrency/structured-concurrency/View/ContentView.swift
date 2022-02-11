@@ -30,7 +30,7 @@ struct ContentView: View {
                         TaskView()
                     }
                     NavigationLink("Task.detached") {
-                        TaskDetached()
+                        TaskDetachedView()
                     }
                 }
             }

@@ -19,7 +19,7 @@
 		3014E7C127A96E92003B6C04 /* AsyncLetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3014E7C027A96E92003B6C04 /* AsyncLetView.swift */; };
 		3014E7C327A9727C003B6C04 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3014E7C227A9727C003B6C04 /* Util.swift */; };
 		3014E7C527AC2F07003B6C04 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3014E7C427AC2F07003B6C04 /* TaskView.swift */; };
-		301D49A627B65C8E0049372B /* TaskDetached.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301D49A527B65C8E0049372B /* TaskDetached.swift */; };
+		301D49A627B65C8E0049372B /* TaskDetachedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301D49A527B65C8E0049372B /* TaskDetachedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +55,7 @@
 		3014E7C027A96E92003B6C04 /* AsyncLetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncLetView.swift; sourceTree = "<group>"; };
 		3014E7C227A9727C003B6C04 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		3014E7C427AC2F07003B6C04 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
-		301D49A527B65C8E0049372B /* TaskDetached.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetached.swift; sourceTree = "<group>"; };
+		301D49A527B65C8E0049372B /* TaskDetachedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetachedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +144,7 @@
 			children = (
 				3014E79027A50E5E003B6C04 /* structured_concurrencyApp.swift */,
 				3014E79227A50E5E003B6C04 /* ContentView.swift */,
-				301D49A527B65C8E0049372B /* TaskDetached.swift */,
+				301D49A527B65C8E0049372B /* TaskDetachedView.swift */,
 				3014E7BA27A514FE003B6C04 /* TaskGroupView.swift */,
 				3014E7C027A96E92003B6C04 /* AsyncLetView.swift */,
 				3014E7C427AC2F07003B6C04 /* TaskView.swift */,
@@ -293,7 +293,7 @@
 			files = (
 				3014E7BD27A573F5003B6C04 /* TimeTracker.swift.swift in Sources */,
 				3014E7C527AC2F07003B6C04 /* TaskView.swift in Sources */,
-				301D49A627B65C8E0049372B /* TaskDetached.swift in Sources */,
+				301D49A627B65C8E0049372B /* TaskDetachedView.swift in Sources */,
 				3014E7C327A9727C003B6C04 /* Util.swift in Sources */,
 				3014E7C127A96E92003B6C04 /* AsyncLetView.swift in Sources */,
 				3014E79327A50E5E003B6C04 /* ContentView.swift in Sources */,

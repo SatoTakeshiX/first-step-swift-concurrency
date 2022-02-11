@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TaskView: View {
-    @StateObject
     private var viewModel = TaskViewModel()
 
     var body: some View {
@@ -45,7 +44,7 @@ struct TaskView: View {
     }
 }
 
-final class TaskViewModel: ObservableObject {
+final class TaskViewModel {
 
     struct InternalError: Error {}
 
@@ -111,13 +110,6 @@ final class TaskViewModel: ObservableObject {
             throw CancellationError()
         } else {
             throw InternalError()
-        }
-        throw InternalError()
-
-        Task {
-            Task {
-
-            }
         }
     }
 }
