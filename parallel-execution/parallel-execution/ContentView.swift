@@ -42,6 +42,19 @@ struct ContentView_Previews: PreviewProvider {
 
 final class ContentViewModel {
 
+    func runAsSequence() {
+        let start = Date()
+        waitOneSecond {
+            waitOneSecond() {
+                waitOneSecond {
+                    let end = Date()
+                    let span = end.timeIntervalSince(start)
+                    print("\(span)秒経過")
+                }
+            }
+        }
+    }
+
     func runAsSequence() async {
         let start = Date()
         await waitOneSecond()
@@ -50,6 +63,28 @@ final class ContentViewModel {
         let end = Date()
         let span = end.timeIntervalSince(start)
         print("\(span)秒経過")
+    }
+
+    func funAsParallel(completionHandler: @escaping (() -> Void)) {
+        let group: DispatchGroup = .init()
+        group.enter()
+        waitOneSecond {
+            group.leave()
+        }
+
+        group.enter()
+        waitOneSecond {
+            group.leave()
+        }
+
+        group.enter()
+        waitOneSecond {
+            group.leave()
+        }
+
+        group.notify(queue: .global()) {
+            completionHandler()
+        }
     }
 
     func runAsParallel() async {
@@ -74,6 +109,11 @@ final class ContentViewModel {
         async let image3 = fetchImage(userID: "3")
 
         return await [image1, image2, image3]
+    }
+
+    private func waitOneSecond(completionHanlder: (() -> ())) {
+        sleep(1)
+        completionHanlder()
     }
 
     private func waitOneSecond() async {
