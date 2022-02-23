@@ -51,6 +51,19 @@ func newAsyncRequest(with urlString: String) async throws -> String {
     }
 }
 
+// 型全体に適応
+@MainActor
+class SomeViewModel {
+    // nonisolatedでMainActorを無効にする
+    nonisolated func fetchUser() {
+    }
+}
+
+class AnotherViewModel {
+    @MainActor var url: URL? // プロパティに適応
+    @MainActor func didTapButton() {} // メソッドに適応
+}
+
 Task.detached {
     let urlString = "https://api.github.com/search/repositories?q=swift"
     let result = try await newAsyncRequest(with: urlString)

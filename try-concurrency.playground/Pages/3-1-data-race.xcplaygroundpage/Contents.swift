@@ -1,6 +1,7 @@
 //: [Previous](@previous)
 
 import Foundation
+import _Concurrency
 
 /*:
  データ競合を解説するコード。
@@ -46,4 +47,29 @@ DispatchQueue.global(qos: .default).async {
  100
  ```
  */
+
+
+actor Score2 {
+    var logs: [Int] = []
+    private(set) var highScore: Int = 0
+
+    func update(with score: Int) {
+        logs.append(score)
+        if score > highScore {
+            highScore = score
+        }
+    }
+}
+
+let score2 = Score2()
+
+Task.detached {
+    await score2.update(with: 100)
+    print(await score2.highScore)
+}
+
+Task.detached {
+    await score2.update(with: 110)
+    print(await score2.highScore)
+}
 //: [Next](@next)

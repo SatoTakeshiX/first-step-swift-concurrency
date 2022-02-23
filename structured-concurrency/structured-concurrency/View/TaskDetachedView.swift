@@ -25,7 +25,6 @@ struct TaskDetachedView: View {
 
 @MainActor
 final class TaskDetachedViewModel {
-
     func didTapButton() {
         Task {
             // ログを送信
@@ -35,8 +34,9 @@ final class TaskDetachedViewModel {
                 async let _ = await self.sendLog(name: "didTapButton")
                 async let _ = await self.sendLog(name: "user is xxx")
             }
-            let user = await fetchUser()
-            print(user)
+            Task {
+                // MainActor引き継ぐ
+            }
         }
     }
 
