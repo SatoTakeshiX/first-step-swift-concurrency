@@ -4,6 +4,30 @@ import SwiftUI
 import _Concurrency
 import PlaygroundSupport
 
+// 型全体に適応
+@MainActor
+class UserDataSource {
+    // 暗黙的にMainActorが適応されている
+    var user: String = ""
+    // 暗黙的にMainActorが適応されている
+    func updateUser() {}
+    // nonisolatedでMainActorを解除する
+    nonisolated func sendLogs() {}
+}
+
+struct Mypage {
+    // プロパティに適応
+    @MainActor
+    var info: String = ""
+
+    // メソッドに適応
+    @MainActor
+    func updateInfo() {}
+
+    // MainActorは適応されない
+    func sendLogs() {}
+}
+
 struct ContentView: View {
     @StateObject
     private var viewModel = ViewModel()
