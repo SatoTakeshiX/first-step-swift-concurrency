@@ -3,12 +3,19 @@
 import Foundation
 import _Concurrency
 
-actor A {
+actor A {}
+//actor B: A {} // Actor types do not support inheritance
+
+actor C {
     var number: Int = 0
+    func update(with value: Int) {
+        number = value
+    }
 }
-let a = A()
+let c = C()
 Task.detached {
-    // await a.number = 1
+    await c.update(with: 1)
+    //c.number = 1
 }
 
 actor B: Hashable {
