@@ -37,6 +37,7 @@ struct ContentView: View {
             .listStyle(.insetGrouped)
             .navigationTitle("Task List")
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

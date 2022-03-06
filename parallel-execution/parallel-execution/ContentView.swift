@@ -26,6 +26,22 @@ struct ContentView: View {
                 } label: {
                     Text("並列実行")
                 }
+                Button {
+                    UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+                    Task {
+                        for await notification in NotificationCenter.default.notifications(
+                                named: UIDevice.orientationDidChangeNotification)
+                                .filter({ _ in
+                                    return UIDevice.current.orientation == .portrait
+                                })
+                        {
+                            print("Device is now in portrait orientation.")
+                        }
+                    }
+
+                } label: {
+                    Text("通知")
+                }
 
             }
             .navigationTitle("並列実行")
