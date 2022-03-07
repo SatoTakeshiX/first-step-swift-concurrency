@@ -19,9 +19,10 @@ struct ContentView: View {
                     CustomeAsyncSequence()
                 }
 
-                Section("AsyncStream") {
-                    Text("ssss")
+                NavigationLink("AsyncSteam") {
+                    AsyncStreamView()
                 }
+
             }
             .listStyle(.insetGrouped)
             .navigationTitle("AsyncSequence")
