@@ -32,6 +32,20 @@ struct AsyncStreamView: View {
                 } label: {
                     Text("AsyncStreamを使う")
                 }
+
+                Button {
+                    Task {
+                        do {
+                            for try await coordinate in locationManager.locationsWithError {
+                                print(coordinate)
+                            }
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
+                } label: {
+                    Text("AsyncThrowingStreamを使う")
+                }
             }
         }
         .onAppear {
@@ -39,7 +53,7 @@ struct AsyncStreamView: View {
         }
         .alert(Text("位置情報を許可してください"),
                isPresented: $locationManager.showAuthorizationAlert) {
-            Text("ddddd")
+            Button("OK") {}
         }
     }
 }
