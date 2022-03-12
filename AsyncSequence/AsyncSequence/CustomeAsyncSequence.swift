@@ -24,6 +24,9 @@ struct CustomeAsyncSequence: View {
                     for await i in counter.countdown(amount: 10) {
                         print(i)
                     }
+
+                    let firstEven = await counter.countdown(amount: 10).first { $0 % 2 == 0 }
+                    print(firstEven ?? "なし")
                 }
             } label: {
                 Text("カウントダウン")
@@ -54,9 +57,6 @@ struct Counter {
         struct AsyncIterator: AsyncIteratorProtocol {
             var amount: Int
             mutating func next() async -> Element? {
-
-                // 0.1秒待機
-                try? await Task.sleep(nanoseconds: 100_000_000 * 1)
 
                 guard amount >= 0 else {
                     return nil

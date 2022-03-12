@@ -42,8 +42,10 @@ final class UserAPIsViewModel: ObservableObject {
     var enterBackgroundTask: Task<Void, Never>?
 
     func checkAppStatus() {
+        lagacyObserve()
+        let notificationCenter = NotificationCenter.default
         enterForegroundTask = Task {
-            let willEnterForeground = NotificationCenter.default.notifications(named: UIApplication.willEnterForegroundNotification)
+            let willEnterForeground = notificationCenter.notifications(named: UIApplication.willEnterForegroundNotification)
 
             for await notification in willEnterForeground {
                 print(notification)
@@ -51,11 +53,19 @@ final class UserAPIsViewModel: ObservableObject {
         }
 
         enterBackgroundTask = Task {
-            let didEnterBackground = NotificationCenter.default.notifications(named: UIApplication.didEnterBackgroundNotification)
+            let didEnterBackground = notificationCenter.notifications(named: UIApplication.didEnterBackgroundNotification)
 
             for await notification in didEnterBackground {
                 print(notification)
             }
+        }
+    }
+
+    func lagacyObserve() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(forName: UIApplication.willEnterForegroundNotification,
+                                       object: nil, queue: nil) { notification in
+            print("\(notification)")
         }
     }
 
@@ -68,6 +78,13 @@ final class UserAPIsViewModel: ObservableObject {
             do {
                 for try await line in url.lines {
                     print(line)
+                    if line == "apple" {
+                        continue
+                    }
+
+                    if line == "five" {
+                        break
+                    }
                     text += "\(line)\n"
                 }
             } catch {

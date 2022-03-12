@@ -61,15 +61,36 @@ struct AsyncStreamView: View {
 @MainActor
 final class LocationManager: NSObject, ObservableObject {
 
+    struct LocationError: Error {
+        let message: String
+    }
+
     @Published
     var showAuthorizationAlert: Bool = false
 
     @Published
     var coordinate: CLLocationCoordinate2D = .init()
 
-    private var continuation: AsyncStream<CLLocationCoordinate2D>.Continuation?
+    var locations: AsyncStream<CLLocationCoordinate2D> {
+        AsyncStream { [weak self] continuation in
+            self?.continuation = continuation
+        }
+    }
 
-    private let locationManager = CLLocationManager()
+    var locationsWithError: AsyncThrowingStream<CLLocationCoordinate2D, Error> {
+        AsyncThrowingStream { [weak self] continuation in
+            guard let self = self else { return }
+            switch self.locationManager.authorizationStatus {
+                case .notDetermined:
+                    locationManager.requestWhenInUseAuthorization()
+                case .denied, .restricted:
+                    continuation.finish(throwing: LocationError(message: "位置情報を許可してください"))
+                default:
+                    break
+            }
+            continuationWithError = continuation
+        }
+    }
 
     func setup() {
         locationManager.delegate = self
@@ -93,53 +114,39 @@ final class LocationManager: NSObject, ObservableObject {
     func stopLocation() {
         locationManager.stopUpdatingHeading()
         continuation?.finish()
+        continuationWithError?.finish(throwing: nil)
     }
 
-    var locations: AsyncStream<CLLocationCoordinate2D> {
-        AsyncStream { [weak self] continuation in
-            self?.continuation = continuation
-        }
-    }
-
-    struct LocationError: Error {
-        let message: String
-    }
-
-    var continuationWithError: AsyncThrowingStream<CLLocationCoordinate2D, Error>.Continuation?
-
-    var locationsWithError: AsyncThrowingStream<CLLocationCoordinate2D, Error> {
-        AsyncThrowingStream { [weak self] continuation in
-            guard let self = self else { return }
-            switch self.locationManager.authorizationStatus {
-                case .notDetermined:
-                    locationManager.requestWhenInUseAuthorization()
-                case .denied, .restricted:
-                    continuation.finish(throwing: LocationError(message: "位置情報を許可してください"))
-                default:
-                    break
+    private var continuation: AsyncStream<CLLocationCoordinate2D>.Continuation? {
+        didSet {
+            continuation?.onTermination = { @Sendable [weak self]  _ in
+                self?.locationManager.stopUpdatingLocation()
             }
-            continuationWithError = continuation
         }
     }
+    private var continuationWithError: AsyncThrowingStream<CLLocationCoordinate2D, Error>.Continuation? {
+        didSet {
+            continuationWithError?.onTermination = { @Sendable [weak self] _ in
+                self?.locationManager.stopUpdatingLocation()
+            }
+        }
+    }
+
+    private let locationManager = CLLocationManager()
 }
 
 extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
         guard let lastLocation = locations.last else {
+            continuationWithError?.finish(throwing: LocationError(message: "位置情報がありません"))
             return
         }
         coordinate = lastLocation.coordinate
 
         continuation?.yield(lastLocation.coordinate)
-        continuation?.onTermination = { @Sendable [weak self]  _ in
-            self?.locationManager.stopUpdatingLocation()
-        }
 
         continuationWithError?.yield(lastLocation.coordinate)
-        continuationWithError?.onTermination = { @Sendable [weak self] _ in
-            self?.locationManager.stopUpdatingLocation()
-        }
     }
 
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
