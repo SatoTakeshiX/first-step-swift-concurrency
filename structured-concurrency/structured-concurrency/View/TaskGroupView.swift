@@ -48,8 +48,9 @@ final class TaskGroupViewModel {
 
     func showMypageData() {
         Task {
-            await TimeTracker.track {
-                let mypageData = await fetchMyPageData()
+            await TimeTracker.track { [weak self] in
+                guard let self = self else { return }
+                let mypageData = await self.fetchMyPageData()
                 print(mypageData)
             }
         }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 struct TaskView: View {
     private var viewModel = TaskViewModel()
 
