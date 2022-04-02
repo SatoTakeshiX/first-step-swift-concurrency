@@ -37,6 +37,10 @@ struct TaskGroupView: View {
     }
 }
 
+class NonSendable {
+    var name: NSString = ""
+}
+
 final class TaskGroupViewModel {
 
     struct MypageInfo {
@@ -97,11 +101,15 @@ final class TaskGroupViewModel {
             case friends([String])
             case articles([String])
         }
+        var nsString = NonSendable()
+        var name: String = ""
         await withTaskGroup(of: FetchType.self) { group in
 
-            group.addTask { [weak self] in
+            group.addTask { [weak self, nsString] in
                 // 友達APIを叩いて名前を取得
                 let friends = await self?.fetchFriends() ?? []
+                nsString.name = "22222"
+                //name = "apple"
                 return FetchType.friends(friends)
             }
 
