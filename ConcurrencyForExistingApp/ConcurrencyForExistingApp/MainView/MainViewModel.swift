@@ -7,6 +7,7 @@
 
 import UIKit
 
+@MainActor
 final class MainViewModel {
 
     let apiClient: APIClient
@@ -35,7 +36,7 @@ final class MainViewModel {
                         self.showError(.noData)
                         return
                     }
-                    self.makeRepositories(repositories: response.items)
+                    self.currentSnapshot = self.makeRepositories(repositories: response.items)
 
                 case .failure(let error):
                     self.showError(error)
@@ -43,7 +44,28 @@ final class MainViewModel {
         }
     }
 
-    func makeRepositories(repositories: [Repository]) {
+    func update() {
+        Task {
+            currentSnapshot = try await fetchDataByConcurrency()
+        }
+    }
+
+    nonisolated
+    func fetchDataByConcurrency() async throws -> NSDiffableDataSourceSnapshot<Section, RepositoryItem> {
+
+        let request = SearchRepositoryRequest(query: "swift")
+        do {
+            let response = try await apiClient.asyncRequest(with: request)
+            guard let response = response else {
+                throw APIClientError.noData
+            }
+            return await makeRepositories(repositories: response.items)
+        } catch {
+            throw error
+        }
+    }
+
+    func makeRepositories(repositories: [Repository]) -> NSDiffableDataSourceSnapshot<Section, RepositoryItem> {
 
         let items = repositories.map {
             RepositoryItem(repository: $0, image: nil)
@@ -52,8 +74,7 @@ final class MainViewModel {
         var snapshot = NSDiffableDataSourceSnapshot<Section, RepositoryItem>()
         snapshot.appendSections([.main])
         snapshot.appendItems(items)
-
-        currentSnapshot = snapshot
+        return snapshot
     }
 
     func fetchImage(item: RepositoryItem, completion: @escaping (UIImage?) -> Void) {
@@ -84,6 +105,22 @@ final class MainViewModel {
                         completion(nil)
                     }
             }
+        }
+    }
+
+    nonisolated
+    func fetchImageByCuncurrency(item: RepositoryItem) async throws -> UIImage? {
+        guard let url = URL(string: item.repository.owner.avatarUrl) else {
+            return nil
+        }
+        let request = URLRequest(url: url)
+
+        do {
+            let data = try await apiClient.asyncRequestData(with: request)
+            guard let data = data else { throw APIClientError.noData }
+            return UIImage(data: data)
+        } catch {
+            throw error
         }
     }
 }

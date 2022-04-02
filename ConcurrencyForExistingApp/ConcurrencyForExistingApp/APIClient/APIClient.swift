@@ -65,6 +65,15 @@ public final class APIClient {
         }
     }
 
+    public func asyncRequest<Request>(with request: Request) async throws -> Request.Response? where Request: RequestType {
+        return try await withCheckedThrowingContinuation { continuation in
+            self.request(with: request) { result in
+                continuation.resume(with: result)
+            }
+        }
+    }
+
+    @available(iOS, deprecated: 13.0, message: "替わりにxxxを利用してください")
     public func request<Request>(with request: Request,
                                  completionHandler: @escaping (Result<Request.Response?, APIClientError>) -> Void) where Request: RequestType {
         guard let urlRequest = request.makeURLRequest(baseURLString: baseURLString) else {
@@ -88,6 +97,7 @@ public final class APIClient {
         }
     }
 
+    @available(iOS, deprecated: 13.0, message: "替わりにxxxを利用してください")
     public func requestData(with urlRequest: URLRequest,
                             completionHandler: @escaping (Result<Data?, APIClientError>) -> Void) {
 
@@ -112,5 +122,13 @@ public final class APIClient {
             }
         }
         task.resume()
+    }
+
+    public func asyncRequestData(with urlRequest: URLRequest) async throws -> Data? {
+        return try await withCheckedThrowingContinuation { continuation in
+            self.requestData(with: urlRequest) { result in
+                continuation.resume(with: result)
+            }
+        }
     }
 }

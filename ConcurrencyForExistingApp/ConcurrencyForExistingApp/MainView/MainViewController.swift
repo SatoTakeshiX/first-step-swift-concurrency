@@ -13,7 +13,20 @@ final class MainViewController: UIViewController {
 
     @IBOutlet private weak var tableView: UITableView!
 
-    private let viewModel = MainViewModel()
+    // Expression requiring global actor 'MainActor' cannot appear in default-value expression of property 'viewModel'; this is an error in Swift 6
+    //private let viewModel = MainViewModel()
+
+    private let viewModel: MainViewModel
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        self.viewModel = MainViewModel()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+
+    required init?(coder: NSCoder) {
+        self.viewModel = MainViewModel()
+        super.init(coder: coder)
+    }
 
     private lazy var dataSource: UITableViewDiffableDataSource<Section, RepositoryItem> = {
         let dataSource = UITableViewDiffableDataSource<Section, RepositoryItem>(tableView: tableView) { [weak self] (tableView, indexPath, item) -> UITableViewCell? in
@@ -26,9 +39,14 @@ final class MainViewController: UIViewController {
             cell.textLabel?.text = item.repository.name
             cell.detailTextLabel?.text = item.repository.description
 
-            self.viewModel.fetchImage(item: item) { image in
+            Task {
+                let image = try await self.viewModel.fetchImageByCuncurrency(item: item)
                 cell.imageView?.image = image
             }
+
+//            self.viewModel.fetchImage(item: item) { image in
+//                cell.imageView?.image = image
+//            }
 
             return cell
 
@@ -59,7 +77,8 @@ final class MainViewController: UIViewController {
     }
 
     private func fetchData() {
-        viewModel.fetchData()
+        // viewModel.fetchData()
+        viewModel.update()
     }
 }
 
