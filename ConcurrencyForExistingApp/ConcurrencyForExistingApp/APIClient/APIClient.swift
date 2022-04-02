@@ -73,7 +73,7 @@ public final class APIClient {
         }
     }
 
-    @available(iOS, deprecated: 13.0, message: "替わりにxxxを利用してください")
+    @available(iOS, deprecated: 13.0, message: "替わりにasyncRequestを利用してください")
     public func request<Request>(with request: Request,
                                  completionHandler: @escaping (Result<Request.Response?, APIClientError>) -> Void) where Request: RequestType {
         guard let urlRequest = request.makeURLRequest(baseURLString: baseURLString) else {
@@ -97,7 +97,7 @@ public final class APIClient {
         }
     }
 
-    @available(iOS, deprecated: 13.0, message: "替わりにxxxを利用してください")
+    @available(iOS, deprecated: 13.0, message: "替わりにasyncRequestDataを利用してください")
     public func requestData(with urlRequest: URLRequest,
                             completionHandler: @escaping (Result<Data?, APIClientError>) -> Void) {
 
