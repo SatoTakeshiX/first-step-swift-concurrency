@@ -36,7 +36,7 @@ final class MainViewModel {
                         self.showError(.noData)
                         return
                     }
-                    self.currentSnapshot = self.makeRepositories(repositories: response.items)
+                    self.currentSnapshot = self.makeSnapshot(repositories: response.items)
 
                 case .failure(let error):
                     self.showError(error)
@@ -59,13 +59,13 @@ final class MainViewModel {
             guard let response = response else {
                 throw APIClientError.noData
             }
-            return await makeRepositories(repositories: response.items)
+            return await makeSnapshot(repositories: response.items)
         } catch {
             throw error
         }
     }
 
-    func makeRepositories(repositories: [Repository]) -> NSDiffableDataSourceSnapshot<Section, RepositoryItem> {
+    func makeSnapshot(repositories: [Repository]) -> NSDiffableDataSourceSnapshot<Section, RepositoryItem> {
 
         let items = repositories.map {
             RepositoryItem(repository: $0, image: nil)
