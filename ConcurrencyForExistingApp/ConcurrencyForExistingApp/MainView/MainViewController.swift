@@ -16,20 +16,20 @@ final class MainViewController: UIViewController {
     private let viewModel = MainViewModel()
 
     private lazy var dataSource: UITableViewDiffableDataSource<Section, RepositoryItem> = {
-        let dataSource = UITableViewDiffableDataSource<Section, RepositoryItem>(tableView: tableView) { (tableView, indexPath, item) -> UITableViewCell? in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: Self.cellIdentifier, for: indexPath) as? AsyncImageViewCell else {
+        let dataSource = UITableViewDiffableDataSource<Section, RepositoryItem>(tableView: tableView) { [weak self] (tableView, indexPath, item) -> UITableViewCell? in
+            guard let self = self else { return nil }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Self.cellIdentifier, for: indexPath) as? SubtitleTableCell else {
                 return nil
             }
 
             cell.selectionStyle = .none
-
             cell.textLabel?.text = item.repository.name
             cell.detailTextLabel?.text = item.repository.description
-            cell.imageURLString = item.repository.owner.avatarUrl
 
             self.viewModel.fetchImage(item: item) { image in
-                cell.updateImage(image: image, imageURLString: item.repository.owner.avatarUrl)
+                cell.imageView?.image = image
             }
+
             return cell
 
         }
@@ -45,10 +45,7 @@ final class MainViewController: UIViewController {
     }
 
     private func setup() {
-        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: Self.cellIdentifier)
-
-        tableView.register(AsyncImageViewCell.self, forCellReuseIdentifier: Self.cellIdentifier)
-
+        tableView.register(SubtitleTableCell.self, forCellReuseIdentifier: Self.cellIdentifier)
         tableView.dataSource = dataSource
 
         title = "GitHubリポジトリー"

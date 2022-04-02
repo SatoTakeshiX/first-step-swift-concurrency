@@ -23,7 +23,7 @@
 		309F758B27F859B800426284 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F758A27F859B800426284 /* Section.swift */; };
 		309F758D27F859E800426284 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F758C27F859E800426284 /* Repository.swift */; };
 		309F758F27F85D1C00426284 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F758E27F85D1C00426284 /* MainViewModel.swift */; };
-		309F759327F8842D00426284 /* AsyncImageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F759227F8842D00426284 /* AsyncImageViewCell.swift */; };
+		309F759327F8842D00426284 /* SubtitleTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309F759227F8842D00426284 /* SubtitleTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +64,7 @@
 		309F758A27F859B800426284 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		309F758C27F859E800426284 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		309F758E27F85D1C00426284 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		309F759227F8842D00426284 /* AsyncImageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageViewCell.swift; sourceTree = "<group>"; };
+		309F759227F8842D00426284 /* SubtitleTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtitleTableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,7 +178,7 @@
 		309F759127F8840D00426284 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				309F759227F8842D00426284 /* AsyncImageViewCell.swift */,
+				309F759227F8842D00426284 /* SubtitleTableCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -316,7 +316,7 @@
 			files = (
 				309F758F27F85D1C00426284 /* MainViewModel.swift in Sources */,
 				309F754F27F842AF00426284 /* MainViewController.swift in Sources */,
-				309F759327F8842D00426284 /* AsyncImageViewCell.swift in Sources */,
+				309F759327F8842D00426284 /* SubtitleTableCell.swift in Sources */,
 				309F754B27F842AF00426284 /* AppDelegate.swift in Sources */,
 				309F758527F84B3A00426284 /* APIClient.swift in Sources */,
 				309F754D27F842AF00426284 /* SceneDelegate.swift in Sources */,
