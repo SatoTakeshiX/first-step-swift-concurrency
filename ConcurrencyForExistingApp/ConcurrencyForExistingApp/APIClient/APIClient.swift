@@ -32,12 +32,14 @@ public final class APIClient {
         self.session = session
     }
 
+    @available(iOS 15, *)
     public func request<Request>(with request: Request) async -> Result<Request.Response?, APIClientError> where Request: RequestType {
         guard let urlRequest = request.makeURLRequest(baseURLString: baseURLString) else {
             return .failure(.invalidURL)
         }
         do {
             let (data, urlResponse) = try await session.data(for: urlRequest, delegate: nil)
+
             guard let httpStatus = urlResponse as? HTTPURLResponse else {
                 return .failure(.responseError)
             }
