@@ -27,17 +27,17 @@ struct ContentView: View {
 
                 Section("unstructured concurrency") {
                     NavigationLink("Task") {
-
+                        TaskView()
                     }
                     NavigationLink("Task.detached") {
-
+                        TaskDetachedView()
                     }
                 }
             }
             .listStyle(.insetGrouped)
             .navigationTitle("Task List")
         }
-
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

@@ -37,6 +37,10 @@ struct TaskGroupView: View {
     }
 }
 
+class NonSendable {
+    var name: NSString = ""
+}
+
 final class TaskGroupViewModel {
 
     struct MypageInfo {
@@ -48,8 +52,9 @@ final class TaskGroupViewModel {
 
     func showMypageData() {
         Task {
-            await TimeTracker.track {
-                let mypageData = await fetchMyPageData()
+            await TimeTracker.track { [weak self] in
+                guard let self = self else { return }
+                let mypageData = await self.fetchMyPageData()
                 print(mypageData)
             }
         }
@@ -96,17 +101,21 @@ final class TaskGroupViewModel {
             case friends([String])
             case articles([String])
         }
+        var nsString = NonSendable()
+        var name: String = ""
         await withTaskGroup(of: FetchType.self) { group in
 
-            group.addTask {
+            group.addTask { [weak self, nsString] in
                 // 友達APIを叩いて名前を取得
-                let friends = await self.fetchFriends()
+                let friends = await self?.fetchFriends() ?? []
+                nsString.name = "22222"
+                //name = "apple"
                 return FetchType.friends(friends)
             }
 
-            group.addTask {
+            group.addTask { [weak self] in
                 // 投稿記事APIを叩いて記事名を取得
-                let articles = await self.fetchArticle()
+                let articles = await self?.fetchArticle() ?? []
                 return FetchType.articles(articles)
             }
 
