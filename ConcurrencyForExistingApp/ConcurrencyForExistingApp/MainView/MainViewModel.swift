@@ -16,12 +16,6 @@ final class MainViewModel {
 
     var showError: (APIClientError) -> Void = { _ in }
 
-    var currentSnapshot = NSDiffableDataSourceSnapshot<Section, RepositoryItem>() {
-        didSet {
-            updateData(currentSnapshot)
-        }
-    }
-
     init(apiClient: APIClient = APIClient(session: URLSession.shared)) {
         self.apiClient = apiClient
     }
@@ -36,7 +30,8 @@ final class MainViewModel {
                         self.showError(.noData)
                         return
                     }
-                    self.currentSnapshot = self.makeSnapshot(repositories: response.items)
+                    let newSnapshot = self.makeSnapshot(repositories: response.items)
+                    self.updateData(newSnapshot)
 
                 case .failure(let error):
                     self.showError(error)
@@ -46,7 +41,8 @@ final class MainViewModel {
 
     func update() {
         Task {
-            currentSnapshot = try await fetchDataByConcurrency()
+            let newSnapshot = try await fetchDataByConcurrency()
+            updateData(newSnapshot)
         }
     }
 
