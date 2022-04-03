@@ -17,7 +17,6 @@
         <page name='data-invalid'/>
         <page name='actor-in-await'/>
         <page name='image-downloader'/>
-        <page name='1-1-async-by-closure'/>
         <page name='3-1-async-sequences'/>
         <page name='5-1-sendable'/>
     </pages>

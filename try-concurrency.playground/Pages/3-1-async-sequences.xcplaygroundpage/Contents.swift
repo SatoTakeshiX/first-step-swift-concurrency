@@ -34,24 +34,6 @@ Task {
     }
 }
 
-// どんな例がいいかな？
-/*
- URL->ファイルのlineごとになにかする
- counter
- for inでやりたいこと。
- arrayを回したいと思ったけど、Task groupの使い方はすごい
- addTaskして結果をnextで受ける。
- タスクを入れてnextで受ける。
- 料理の例よさそう？並列処理で例に出ていた。
-
- for awai in で回すと料理が次々に出てくるとか？
-
- カウンターの例を出して、説明した後に、料理の
-
- 総カロリーを入力すると、そこまで食べられる料理を出してくれるとかよさそう
- */
-
-
 func observeNotifications() async {
     //Use any notification name appropriate
     let customNotificationName = Notification.Name("custom")
@@ -108,24 +90,17 @@ Task {
 
 }
 
-
-
-
 func postNotification() {
     let n = Notification(name: Notification.Name("custom"), object: nil, userInfo: nil)
     NotificationCenter.default.post(n)
 }
 
 Task {
-
     await observeNotifications()
-
-
 }
 
 postNotification()
 postNotification()
 postNotification()
-
 
 //: [Next](@next)
