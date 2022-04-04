@@ -26,7 +26,8 @@ public extension RequestType {
         }
 
         var request = URLRequest(url: fullURL)
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        // https://docs.github.com/en/rest/reference/search#search-repositories
+        request.addValue("application/vnd.github.v3+json", forHTTPHeaderField: "Accept")
         request.httpMethod = "GET"
         return request
     }
