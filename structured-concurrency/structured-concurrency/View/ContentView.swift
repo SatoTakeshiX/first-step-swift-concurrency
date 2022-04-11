@@ -21,7 +21,6 @@ struct ContentView: View {
                     }
                     NavigationLink("async let") {
                         AsyncLetView()
-        
                     }
                 }
 

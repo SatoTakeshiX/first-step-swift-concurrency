@@ -123,9 +123,10 @@ struct TaskView_Previews: PreviewProvider {
 
 actor A {
     func runTask() {
-        Task(priority: .high) {
-            Task {
+        let parent = Task(priority: .high) {
+            let child = Task {
                 // 子タスクはpriority: highを引き継ぐ
+                // childタスクがキャンセルしてもparentタスクが自動でキャンセルされるわけではない
             }
         }
     }
