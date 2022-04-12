@@ -28,6 +28,17 @@ struct SendableOK: Sendable {
 //    var message: NSString
 //}
 
+struct GenericType<T>: Sendable {
+    var a: T
+}
+
+// where句で型パラメータがSendable適応されているときのみ
+// Sendableに適応させる
+struct ConfirmSendable<T> {
+    var a: T
+}
+extension ConfirmSendable: Sendable where T: Sendable {}
+
 //extension Score: Sendable {}
 
 // publicでないなら暗黙的に準拠
