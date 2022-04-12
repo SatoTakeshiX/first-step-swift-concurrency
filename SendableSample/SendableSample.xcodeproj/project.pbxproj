@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		306305C62805DC0700C93409 /* SendableSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306305C52805DC0700C93409 /* SendableSyntax.swift */; };
+		306305C82805DD1500C93409 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306305C72805DD1500C93409 /* Util.swift */; };
 		30B9568127E87E90007E0E60 /* SendableSampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B9568027E87E90007E0E60 /* SendableSampleApp.swift */; };
 		30B9568327E87E90007E0E60 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B9568227E87E90007E0E60 /* ContentView.swift */; };
 		30B9568527E87E91007E0E60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30B9568427E87E91007E0E60 /* Assets.xcassets */; };
@@ -34,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		306305C52805DC0700C93409 /* SendableSyntax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendableSyntax.swift; sourceTree = "<group>"; };
+		306305C72805DD1500C93409 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		30B9567D27E87E90007E0E60 /* SendableSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SendableSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30B9568027E87E90007E0E60 /* SendableSampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendableSampleApp.swift; sourceTree = "<group>"; };
 		30B9568227E87E90007E0E60 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -98,6 +102,8 @@
 				30B9568227E87E90007E0E60 /* ContentView.swift */,
 				30B9568427E87E91007E0E60 /* Assets.xcassets */,
 				30B9568627E87E91007E0E60 /* Preview Content */,
+				306305C52805DC0700C93409 /* SendableSyntax.swift */,
+				306305C72805DD1500C93409 /* Util.swift */,
 			);
 			path = SendableSample;
 			sourceTree = "<group>";
@@ -258,7 +264,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				30B9568327E87E90007E0E60 /* ContentView.swift in Sources */,
+				306305C62805DC0700C93409 /* SendableSyntax.swift in Sources */,
 				30B9568127E87E90007E0E60 /* SendableSampleApp.swift in Sources */,
+				306305C82805DD1500C93409 /* Util.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
