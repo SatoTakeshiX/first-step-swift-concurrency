@@ -98,6 +98,7 @@ class NonSendable {
 }
 var nonSendable = NonSendable()
 
+/*
  // @Sendableに違反しているコード。コンパイルエラーになる
 func nestedFunc() {
     var state: Int = 42
@@ -115,4 +116,5 @@ func nestedFunc() {
         nestA.nsString = "banana"
     }
 }
+*/
 

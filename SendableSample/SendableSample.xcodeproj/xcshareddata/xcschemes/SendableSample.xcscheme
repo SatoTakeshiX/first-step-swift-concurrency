@@ -48,6 +48,26 @@
                ReferencedContainer = "container:SendableSample.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "306305D6280AACA600C93409"
+               BuildableName = "NotYetConcurrencyTests.xctest"
+               BlueprintName = "NotYetConcurrencyTests"
+               ReferencedContainer = "container:SendableSample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "306305FD280AB07900C93409"
+               BuildableName = "ConcurrencyCompleteLibraryTests.xctest"
+               BlueprintName = "ConcurrencyCompleteLibraryTests"
+               ReferencedContainer = "container:SendableSample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

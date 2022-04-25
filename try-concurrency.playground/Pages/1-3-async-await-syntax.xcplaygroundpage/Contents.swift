@@ -47,6 +47,17 @@ class D {
     }
 }
 
+/**
+Task.detached {
+    // awaitをつけないで非同期関数実行
+    a() // Expression is 'async' but is not marked with 'await'
+}
+*/
+
+/**
+a() // 'async' call in a function that does not support concurrency
+*/
+
 Task.detached {
     _ = await D(label: "")
 }
