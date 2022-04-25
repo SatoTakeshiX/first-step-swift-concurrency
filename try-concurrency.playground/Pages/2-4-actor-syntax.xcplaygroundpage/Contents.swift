@@ -15,7 +15,7 @@ actor C {
 let c = C()
 Task.detached {
     await c.update(with: 1)
-    //c.number = 1
+    // await c.number = 1 // Actorのプロパティを外から直接更新
 }
 
 actor B: Hashable {
