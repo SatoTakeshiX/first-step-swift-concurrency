@@ -14,7 +14,11 @@ struct CustomeAsyncSequence: View {
     private var task: Task<Void, Never>?
 
     @StateObject
-    private var filterManager = FilterImageManeger()
+    private var filterManager: FilterImageManeger
+
+    init() {
+        self._filterManager = StateObject(wrappedValue: FilterImageManeger())
+    }
 
     var body: some View {
         List {

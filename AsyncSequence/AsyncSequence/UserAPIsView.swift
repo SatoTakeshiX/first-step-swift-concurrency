@@ -9,7 +9,12 @@ import SwiftUI
 
 struct UserAPIsView: View {
     @StateObject
-    private var  viewModel = UserAPIsViewModel()
+    private var  viewModel: UserAPIsViewModel
+
+    init() {
+        self._viewModel = StateObject(wrappedValue: UserAPIsViewModel())
+    }
+
     var body: some View {
         VStack {
             TextEditor(text: $viewModel.text)

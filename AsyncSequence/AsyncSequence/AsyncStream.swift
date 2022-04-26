@@ -10,7 +10,11 @@ import CoreLocation
 
 struct AsyncStreamView: View {
     @StateObject
-    private var locationManager = LocationManager()
+    private var locationManager: LocationManager
+
+    init() {
+        self._locationManager = StateObject(wrappedValue: LocationManager())
+    }
 
     var body: some View {
         VStack {
