@@ -17,7 +17,7 @@ actor Score {
     // サーバーに点数を送るとサーバーが集計した自分の最高得点が得られると想定するメソッド
     // 実際は2秒まって引数のscoreを返すだけ
     func requestHighScore(with score: Int) async -> Int {
-        try? await Task.sleep(nanoseconds: 2 * 1_000_000_000)  // 2秒待つ
+        try? await Task.sleep(nanoseconds: 2 * NSEC_PER_SEC)  // 2秒待つ
         return score
     }
 }
@@ -55,7 +55,7 @@ actor ImageDownloader {
     // サーバーに画像をリクエストすることを想定するメソッド
     // 2秒後に画像をランダムで返す
     func downloadImage(from url: String) async -> UIImage {
-        try? await Task.sleep(nanoseconds: 2 * 1_000_000_000)  // 2秒待つ
+        try? await Task.sleep(nanoseconds: 2 * NSEC_PER_SEC)  // 2秒待つ
         switch url {
             case "monster":
                 // サーバー側でリソースが変わったことを表すためランダムで画像名をセット
@@ -107,10 +107,11 @@ actor ImageDownloader2 {
         let image = await task.value
         cache[url] = .ready(image)
         return image
-    }
+    }// NSEC_PER_SEC
 
     func downloadImage(from url: String) async -> UIImage {
-        try? await Task.sleep(nanoseconds: 2 * 1_000_000_000)  // 2秒待つ
+        print(NSEC_PER_SEC)
+        try? await Task.sleep(nanoseconds: 2 * NSEC_PER_SEC)  // 2秒待つ
         switch url {
             case "monster":
                 // サーバー側でリソースが変わったことを表すためランダムで画像名をセット

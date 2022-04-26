@@ -5,6 +5,15 @@ import PlaygroundSupport
 import _Concurrency
 PlaygroundPage.current.needsIndefiniteExecution = true
 
+public enum APIClientError: Error {
+    case invalidURL
+    case responseError
+    case parseError(Error)
+    case serverError(Error)
+    case badStatus(statusCode: Int)
+    case noData
+}
+
 func request(with urlString: String, completionHandler: @escaping (Result<String, APIClientError>) -> ()) {
     guard let url = URL(string: urlString) else {
         completionHandler(.failure(.invalidURL))

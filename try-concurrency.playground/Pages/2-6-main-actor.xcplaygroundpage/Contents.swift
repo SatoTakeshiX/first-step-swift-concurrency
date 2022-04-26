@@ -68,7 +68,7 @@ final class ViewModel: ObservableObject {
     }
 
     private func waitOneSecond(with string: String) async -> String {
-        try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)  // 2秒待つ
+        try? await Task.sleep(nanoseconds: 1 * NSEC_PER_SEC)  // 2秒待つ
         return string
     }
 }
