@@ -11,7 +11,6 @@ actor Score {
         // requestHighScoreを呼ぶ順番で結果が変わる
         highScore = await requestHighScore(with: score)
         localLogs.append(score)
-
     }
 
     // サーバーに点数を送るとサーバーが集計した自分の最高得点が得られると想定するメソッド
@@ -66,7 +65,6 @@ actor ImageDownloader {
         }
     }
 }
-
 
 let imageDownloader = ImageDownloader()
 Task.detached {
