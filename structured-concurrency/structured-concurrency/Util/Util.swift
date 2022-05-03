@@ -9,6 +9,6 @@ import Foundation
 
 struct Util {
     static func wait(seconds: UInt64) async {
-        try? await Task.sleep(nanoseconds: seconds * 1_000_000_000)
+        try? await Task.sleep(nanoseconds: seconds * NSEC_PER_SEC)
     }
 }
