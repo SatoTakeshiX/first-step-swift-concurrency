@@ -9,7 +9,12 @@ import SwiftUI
 
 @MainActor
 struct TaskDetachedView: View {
-    private var viewModel = TaskDetachedViewModel()
+    private var viewModel: TaskDetachedViewModel
+
+    init() {
+        self.viewModel = TaskDetachedViewModel()
+    }
+
     var body: some View {
         List {
             Section("Task.detached"){
