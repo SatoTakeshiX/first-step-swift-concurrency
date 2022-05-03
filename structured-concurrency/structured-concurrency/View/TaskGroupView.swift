@@ -28,6 +28,11 @@ struct TaskGroupView: View {
                     Text("エラーが起こる場合")
                 }
                 Button {
+                    viewModel.showNonHandlingCancel()
+                } label: {
+                    Text("キャンセルチェックしない場合")
+                }
+                Button {
                     viewModel.showSendLogs()
                 } label: {
                     Text("Voidでgroupの結果使わない")
@@ -45,6 +50,32 @@ final class TaskGroupViewModel {
     }
 
     struct InternalError: Error {}
+
+    func showNonHandlingCancel() {
+        Task {
+            await TimeTracker.track {
+                try? await withThrowingTaskGroup(of: Void.self) { group in
+                    group.addTask {
+                        try Task.checkCancellation()
+                        await Task.sleep(NSEC_PER_SEC)
+                        try Task.checkCancellation()
+                        await Task.sleep(NSEC_PER_SEC)
+                        try Task.checkCancellation()
+                        await Task.sleep(NSEC_PER_SEC)
+                        try Task.checkCancellation()
+                    }
+
+                    group.addTask {
+                        try Task.checkCancellation()
+                        await Task.sleep(NSEC_PER_SEC)
+                        try Task.checkCancellation()
+                    }
+                    let _ = try await group.next()
+                    group.cancelAll()
+                }
+            }
+        }
+    }
 
     func showMypageData() {
         Task {
@@ -101,13 +132,14 @@ final class TaskGroupViewModel {
 
             group.addTask { [weak self] in
                 // 友達APIを叩いて名前を取得
+                // 3秒かかる
                 let friends = await self?.fetchFriends() ?? []
-                //name = "apple"
                 return FetchType.friends(friends)
             }
 
             group.addTask { [weak self] in
                 // 投稿記事APIを叩いて記事名を取得
+                // 1秒かかる
                 let articles = await self?.fetchArticle() ?? []
                 return FetchType.articles(articles)
             }
@@ -201,8 +233,10 @@ final class TaskGroupViewModel {
 
 extension TaskGroupViewModel {
 
+    /// フォローしている友達の名前を取得する。3秒かかる処理
+    /// - Returns: 友達の名前の配列
     private func fetchFriends() async -> [String] {
-        await Util.wait(seconds: 2)
+        await Util.wait(seconds: 3)
         return [
             "Aris",
             "Bob",
@@ -211,6 +245,8 @@ extension TaskGroupViewModel {
         ]
     }
 
+    /// 投稿記事のタイトルを取得する。1秒かかる処理
+    /// - Returns: 記事のタイトルの配列
     private func fetchArticle() async -> [String] {
         await Util.wait(seconds: 1)
         return [
