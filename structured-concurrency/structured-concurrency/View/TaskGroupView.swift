@@ -5,10 +5,18 @@
 //  Created by satoutakeshi on 2022/01/29.
 //
 
-import SwiftUI
+// UIImageがSendableに準拠していないのにwithTaskGroupで利用しているため
+// @preconcurrencyを付与する
+@preconcurrency import SwiftUI
 
+@MainActor
 struct TaskGroupView: View {
-    private let viewModel = TaskGroupViewModel()
+    private let viewModel: TaskGroupViewModel
+
+    init() {
+        self.viewModel = TaskGroupViewModel()
+    }
+
     var body: some View {
         List {
             Section("Task Group使い方"){
@@ -42,6 +50,7 @@ struct TaskGroupView: View {
     }
 }
 
+@MainActor
 final class TaskGroupViewModel {
 
     struct MypageInfo {

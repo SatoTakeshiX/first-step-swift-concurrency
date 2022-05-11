@@ -32,6 +32,12 @@ struct ContentView: View {
                         TaskDetachedView()
                     }
                 }
+
+                Section("Cancel Check") {
+                    NavigationLink("Cancel Check") {
+                        CancellationView()
+                    }
+                }
             }
             .listStyle(.insetGrouped)
             .navigationTitle("Task List")

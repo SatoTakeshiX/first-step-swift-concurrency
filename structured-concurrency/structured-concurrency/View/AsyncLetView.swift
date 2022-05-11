@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 struct AsyncLetView: View {
     private let viewModel = AsyncLetViewModel()
     var body: some View {
@@ -37,6 +38,7 @@ struct AsyncLetView: View {
     }
 }
 
+@MainActor
 final class AsyncLetViewModel {
 
     struct MypageInfo {
@@ -106,6 +108,7 @@ final class AsyncLetViewModel {
 
 extension AsyncLetViewModel {
     private func fetchFriends() async -> [String] {
+        // エラー発生で
         await Util.wait(seconds: 3)
         return [
             "Aris",

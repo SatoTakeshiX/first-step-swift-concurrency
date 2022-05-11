@@ -20,6 +20,7 @@
 		3014E7C327A9727C003B6C04 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3014E7C227A9727C003B6C04 /* Util.swift */; };
 		3014E7C527AC2F07003B6C04 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3014E7C427AC2F07003B6C04 /* TaskView.swift */; };
 		301D49A627B65C8E0049372B /* TaskDetachedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 301D49A527B65C8E0049372B /* TaskDetachedView.swift */; };
+		30E4D9DB2827C899000563BB /* CancellationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E4D9DA2827C899000563BB /* CancellationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		3014E7C227A9727C003B6C04 /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		3014E7C427AC2F07003B6C04 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		301D49A527B65C8E0049372B /* TaskDetachedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetachedView.swift; sourceTree = "<group>"; };
+		30E4D9DA2827C899000563BB /* CancellationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				3014E7BA27A514FE003B6C04 /* TaskGroupView.swift */,
 				3014E7C027A96E92003B6C04 /* AsyncLetView.swift */,
 				3014E7C427AC2F07003B6C04 /* TaskView.swift */,
+				30E4D9DA2827C899000563BB /* CancellationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				3014E79327A50E5E003B6C04 /* ContentView.swift in Sources */,
 				3014E79127A50E5E003B6C04 /* structured_concurrencyApp.swift in Sources */,
 				3014E7BB27A514FE003B6C04 /* TaskGroupView.swift in Sources */,
+				30E4D9DB2827C899000563BB /* CancellationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +475,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-concurrency -Xfrontend -enable-actor-data-race-checks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Personal-Factory.structured-concurrency";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -499,6 +504,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-concurrency -Xfrontend -enable-actor-data-race-checks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Personal-Factory.structured-concurrency";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
