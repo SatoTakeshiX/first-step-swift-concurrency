@@ -9,7 +9,12 @@ import SwiftUI
 
 @MainActor
 struct AsyncLetView: View {
-    private let viewModel = AsyncLetViewModel()
+    private let viewModel: AsyncLetViewModel
+
+    init() {
+        self.viewModel = AsyncLetViewModel()
+    }
+
     var body: some View {
         List {
             Section("async let使い方"){
@@ -49,9 +54,9 @@ final class AsyncLetViewModel {
     struct InternalError: Error {}
 
     func showMypageData() {
-        Task {
-            let mypageData = await fetchMyPageData()
-            print(mypageData)
+        Task { [weak self] in
+            let mypageData = await self?.fetchMyPageData()
+            print(mypageData ?? "")
         }
     }
 
