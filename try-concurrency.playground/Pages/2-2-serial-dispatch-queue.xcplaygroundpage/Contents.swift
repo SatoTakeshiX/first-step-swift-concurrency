@@ -34,7 +34,7 @@ DispatchQueue.global(qos: .default).async {
 
 DispatchQueue.global(qos: .default).async {
     score.update(with: 110) { highScore in
-        print(score.highScore)
+        print(highScore)
     }
 }
 
