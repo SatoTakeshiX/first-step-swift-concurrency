@@ -149,7 +149,7 @@ final class TaskGroupViewModel {
             group.addTask { [weak self] in
                 // 投稿記事APIを叩いて記事名を取得
                 // 1秒かかる
-                let articles = await self?.fetchArticle() ?? []
+                let articles = await self?.fetchArticles() ?? []
                 return FetchType.articles(articles)
             }
 
@@ -256,7 +256,7 @@ extension TaskGroupViewModel {
 
     /// 投稿記事のタイトルを取得する。1秒かかる処理
     /// - Returns: 記事のタイトルの配列
-    private func fetchArticle() async -> [String] {
+    private func fetchArticles() async -> [String] {
         await Util.wait(seconds: 1)
         return [
             "猫を飼い始めました",

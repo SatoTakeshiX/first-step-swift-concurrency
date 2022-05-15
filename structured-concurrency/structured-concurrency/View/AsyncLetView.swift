@@ -86,7 +86,7 @@ final class AsyncLetViewModel {
         Task {
             await TimeTracker.track {
                 async let friends = fetchFriends()
-                async let articles = fetchArticle()
+                async let articles = fetchArticles()
                 // 変数をawaitしないとすぐにリターンされる
             }
         }
@@ -97,7 +97,7 @@ final class AsyncLetViewModel {
     func fetchMyPageData() async -> MypageInfo {
 
         async let friends = fetchFriends()
-        async let articles = fetchArticle()
+        async let articles = fetchArticles()
 
         return await MypageInfo(friends: friends,
                                 airticleTitles: articles)
@@ -123,7 +123,7 @@ extension AsyncLetViewModel {
         ]
     }
 
-    private func fetchArticle() async -> [String] {
+    private func fetchArticles() async -> [String] {
         await Util.wait(seconds: 1)
         return [
             "猫を飼い始めました",
