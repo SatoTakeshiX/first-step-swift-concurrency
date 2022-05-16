@@ -23,6 +23,11 @@ struct TaskDetachedView: View {
                 } label: {
                     Text("ログを送りつつfetch処理")
                 }
+                Button {
+                    viewModel.cancelParentTask()
+                } label: {
+                    Text("下位階層にStructured Concurrencyがある場合")
+                }
             }
         }
     }
@@ -30,6 +35,9 @@ struct TaskDetachedView: View {
 
 @MainActor
 final class TaskDetachedViewModel {
+
+    var parentTask: Task<Void, Never>?
+
     func didTapButton() {
         Task {
             // ログを送信
@@ -60,6 +68,27 @@ final class TaskDetachedViewModel {
         print("sending with \(name)")
     }
 
+    func cancelParentTask() {
+        Task {
+            await TimeTracker.track {
+                parentTask = Task.detached {
+                    await withTaskGroup(of: Void.self) { group in
+                        group.addTask {
+                            try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 2)
+                        }
+                        for await _ in group {
+                            print("finish withTaskGroup")
+                        }
+                    }
+
+                    async let sleep2seconds: ()? = try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 2)
+                    await sleep2seconds
+                    print("finish async let")
+                }
+                parentTask?.cancel()
+            }
+        }
+    }
 }
 
 struct TaskDetached_Previews: PreviewProvider {
