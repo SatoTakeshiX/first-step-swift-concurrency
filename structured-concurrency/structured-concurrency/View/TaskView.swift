@@ -45,6 +45,7 @@ struct TaskView: View {
     }
 }
 
+@MainActor
 final class TaskViewModel {
 
     struct InternalError: Error {}
