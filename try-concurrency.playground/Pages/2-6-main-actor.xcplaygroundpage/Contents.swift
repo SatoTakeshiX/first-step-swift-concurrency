@@ -30,7 +30,12 @@ struct Mypage {
 
 struct ContentView: View {
     @StateObject
-    private var viewModel = ViewModel()
+    private var viewModel: ViewModel
+
+    init() {
+        _viewModel = StateObject(wrappedValue: ViewModel())
+    }
+
     var body: some View {
         List {
             Text(viewModel.text)
