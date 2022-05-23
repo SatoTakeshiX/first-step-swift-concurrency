@@ -1,4 +1,4 @@
-# first-step-swift-concurrency
+# 「Swift Concurrency入門」サンプルコード
 
 本リポジトリは書籍「Swift Concurrency入門」のサンプルコードを提供するリポジトリです。
 
