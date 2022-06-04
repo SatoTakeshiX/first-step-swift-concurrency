@@ -118,3 +118,23 @@ func nestedFunc() {
 }
 */
 
+// Xcode 13.4の更新
+@MainActor
+class MyViewModel {
+    var shouldChangeTitle: Bool = false
+
+    func updateTitleIfNeeded() {
+        var defaultTitle = "Hello"
+
+        Task { @MainActor in // MainActorのクロージャー
+            // shouldChangeTitleはMainActorなのでアクセスできる
+            if shouldChangeTitle {
+                // defaultTitleはMainActorのメソッドのローカル変数
+                // Xcode 13.4からキャプチャできるようになった
+                defaultTitle += "changed"
+                // 参照もできるようになった
+                print(defaultTitle)
+            }
+        }
+    }
+}
