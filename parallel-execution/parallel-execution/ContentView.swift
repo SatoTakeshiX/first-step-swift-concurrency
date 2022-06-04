@@ -133,11 +133,11 @@ final class ContentViewModel {
     }
 
     private func waitOneSecond() async {
-        try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)  // 1秒待つ
+        try? await Task.sleep(nanoseconds: 1 * NSEC_PER_SEC)  // 1秒待つ
     }
 
     private func fetchImage(userID: String) async -> UIImage {
-        try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)  // 1秒待つ
+        try? await Task.sleep(nanoseconds: 1 * NSEC_PER_SEC)  // 1秒待つ
         return UIImage()
     }
 }
