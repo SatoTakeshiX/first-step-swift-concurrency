@@ -7,6 +7,11 @@ import _Concurrency
 func a() async {
     print(#function)
 }
+Task.detached {
+    // 呼び出し
+    await a()
+}
+
 //Task.detached {
 //    a()
 //}
