@@ -41,9 +41,12 @@ final class TaskDetachedViewModel {
     func didTapButton() {
         Task {
             // ログを送信
-            Task.detached(priority: .low) { [weak self] in
+            Task.detached(priority: .low) {
+                // Task.detachedのクロージャー内のself参照について
+                // https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md#implicit-self
+                // Task.detachedはすぐに実行され、実行完了後はクロージャーは開放されるのでselfとの循環参照の恐れがない。
+                // よって[weak self]でselfを弱参照する必要なし。そのまま`self.`でselfのメソッドにアクセスしてよい。
                 print("detached isMainThread: \(Thread.isMainThread)")
-                guard let self = self else { return }
                 async let _ = await self.sendLog(name: "didTapButton")
                 async let _ = await self.sendLog(name: "user is xxx")
             }

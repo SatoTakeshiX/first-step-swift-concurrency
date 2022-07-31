@@ -59,9 +59,9 @@ final class CancellationViewModel: @unchecked Sendable {
     func fetchDataWithLongTask() async throws -> [String] {
         return await withThrowingTaskGroup(of: [String].self) { group in
 
-            group.addTask { [weak self] in
+            group.addTask {
                 try Task.checkCancellation()
-                await self?.veryLongTask()
+                await self.veryLongTask()
                 return ["a", "b"]
             }
 
@@ -78,8 +78,8 @@ final class CancellationViewModel: @unchecked Sendable {
         return try await withThrowingTaskGroup(of: UIImage.self) { group in
             for id in ids {
                 if Task.isCancelled { break }
-                group.addTask { [weak self] in
-                    return await self?.fetchImage(with: id) ?? UIImage()
+                group.addTask {
+                    return await self.fetchImage(with: id)
                 }
             }
             var icons: [UIImage] = []
