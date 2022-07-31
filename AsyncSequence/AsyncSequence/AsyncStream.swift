@@ -28,7 +28,7 @@ struct AsyncStreamView: View {
                 }
 
                 Button {
-                    Task {
+                    locationManager.asyncStreamTask = Task {
                         for await coordinate in locationManager.locations {
                             print(coordinate)
                         }
@@ -38,7 +38,7 @@ struct AsyncStreamView: View {
                 }
 
                 Button {
-                    Task {
+                    locationManager.asyncThrowingStreamTask = Task {
                         do {
                             for try await coordinate in locationManager.locationsWithError {
                                 print(coordinate)
@@ -52,12 +52,15 @@ struct AsyncStreamView: View {
                 }
             }
         }
-        .onAppear {
-            locationManager.setup()
-        }
         .alert(Text("位置情報を許可してください"),
                isPresented: $locationManager.showAuthorizationAlert) {
             Button("OK") {}
+        }
+        .onAppear {
+            locationManager.setup()
+        }
+        .onDisappear {
+            locationManager.cleanup()
         }
     }
 }
@@ -74,6 +77,9 @@ final class LocationManager: NSObject, ObservableObject {
 
     @Published
     var coordinate: CLLocationCoordinate2D = .init()
+
+    var asyncStreamTask: Task<Void, Never>?
+    var asyncThrowingStreamTask: Task<Void, Never>?
 
     var locations: AsyncStream<CLLocationCoordinate2D> {
         AsyncStream { [weak self] continuation in
@@ -119,6 +125,11 @@ final class LocationManager: NSObject, ObservableObject {
         locationManager.stopUpdatingHeading()
         continuation?.finish()
         continuationWithError?.finish(throwing: nil)
+    }
+
+    func cleanup() {
+        asyncStreamTask?.cancel()
+        asyncThrowingStreamTask?.cancel()
     }
 
     private var continuation: AsyncStream<CLLocationCoordinate2D>.Continuation? {
