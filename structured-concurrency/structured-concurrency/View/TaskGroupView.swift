@@ -88,9 +88,8 @@ final class TaskGroupViewModel {
 
     func showMypageData() {
         Task {
-            await TimeTracker.track { [weak self] in
-                guard let self = self else { return }
-                let mypageData = await self.fetchMyPageData()
+            await TimeTracker.track {
+                let mypageData = await fetchMyPageData()
                 print(mypageData)
             }
         }
@@ -139,17 +138,23 @@ final class TaskGroupViewModel {
         }
         await withTaskGroup(of: FetchType.self) { group in
 
-            group.addTask { [weak self] in
+            /**
+             TaskGroup.addTaskのクロージャー内のself参照について
+             https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md#implicit-self
+             TaskGroup.addTaskのクロージャーはすぐに実行され、実行完了後はクロージャーは開放されるのでselfとの循環参照の恐れがない。
+             よって[weak self]でselfを弱参照する必要なし。そのまま`self.`でselfのメソッドにアクセスしてよい。
+             */
+            group.addTask {
                 // 友達APIを叩いて名前を取得
                 // 3秒かかる
-                let friends = await self?.fetchFriends() ?? []
+                let friends = await self.fetchFriends()
                 return FetchType.friends(friends)
             }
 
-            group.addTask { [weak self] in
+            group.addTask {
                 // 投稿記事APIを叩いて記事名を取得
                 // 1秒かかる
-                let articles = await self?.fetchArticles() ?? []
+                let articles = await self.fetchArticles()
                 return FetchType.articles(articles)
             }
 
@@ -193,8 +198,8 @@ final class TaskGroupViewModel {
     func fetchFriendsAvators(ids: [String]) async -> [String: UIImage?] {
         return await withTaskGroup(of: (String, UIImage?).self) { group in
             for id in ids {
-                group.addTask { [weak self] in
-                    return (id, await self?.fetchAvatorImage(id: id))
+                group.addTask {
+                    return (id, await self.fetchAvatorImage(id: id))
                 }
             }
             var avators: [String: UIImage?] = [:]
@@ -207,14 +212,12 @@ final class TaskGroupViewModel {
 
     func fetchAllFriends() async throws -> [String] {
         return try await withThrowingTaskGroup(of: [String].self) { group in
-            group.addTask { [weak self] in
-                guard let self = self else { throw InternalError() }
+            group.addTask {
                 // 3秒かかる
                 return await self.fetchFriends()
             }
 
-            group.addTask { [weak self] in
-                guard let self = self else { throw InternalError() }
+            group.addTask {
                 // 1秒かかる
                 // エラーが発生する
                 return try await self.fetchFriendsFromLocalDB()

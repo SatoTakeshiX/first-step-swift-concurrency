@@ -54,9 +54,9 @@ final class AsyncLetViewModel {
     struct InternalError: Error {}
 
     func showMypageData() {
-        Task { [weak self] in
-            let mypageData = await self?.fetchMyPageData()
-            print(mypageData ?? "")
+        Task {
+            let mypageData = await fetchMyPageData()
+            print(mypageData)
         }
     }
 

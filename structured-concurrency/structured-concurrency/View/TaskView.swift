@@ -61,6 +61,13 @@ final class TaskViewModel {
     }
 
     func fetchUserWithCheckCancellation() {
+        /**
+         Task.initのクロージャー内のself参照について
+         https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md#implicit-self
+         Task.initのクロージャーはすぐに実行され、実行完了後はクロージャーは開放されるのでselfとの循環参照の恐れがない。
+         よって[weak self]でselfを弱参照する必要なし。
+         さらにTask.initはTask.detachedとTaskGroup.addTaskと異なり @_implicitSelfCapture が機能しており、selfを書かなくてもselfのメソッドやプロパティにアクセスができる。
+         */
         task = Task {
             do {
                 let users = try await longTaskWithError()
